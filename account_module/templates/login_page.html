@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main">
+		<div class="login">
+				<form method="post" action="{% url 'login-page' %}">
+					<label for="chk" aria-hidden="true">Login</label>
+                    {% csrf_token %}
+                    {{ login_form.email }}
+                    {{ login_form.password }}
+					<button class="signup-login-btn">Login</button>
+				</form>
+        </div>
+</div>
+{% endblock %}

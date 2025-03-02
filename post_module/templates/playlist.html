@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header_references %}
+    <link rel="stylesheet" href="{% static 'D:\youtube_clone_project\static\css\playlist-detail-style.css' %}">
+    <link rel="stylesheet" href="{% static 'D:\youtube_clone_project\static\css\style.css' %}">
+{% endblock %}
+{% block content %}
+    <h3 class="heading">Playlist</h3>
+    <div class="playlist-container">
+        <div class="playlist-main-video">
+            <div class="playlist-video">
+                <video src="{{ current_video.video.url }}" autoplay controls></video>
+                <h3 class="playlist-title">{{ current_video.title }}</h3>
+            </div>
+            <div class="owner">
+                <a href=""><img src="{{ playlist.channel.profile_picture.url }}"></a>
+                <div>
+                    <a href=""><p>{{ playlist.channel.username }}</p></a>
+                    <span>37.7K subscribers</span>
+                </div>
+                <button type="button">Subscribe</button>
+            </div>
+            <div class="vid-des">
+                <p>{{ current_video.description }}</p>
+                <hr>
+                <div class="cmnt">
+                    <h4>1 Commnets</h4>
+                    <img src="./images/menu.png" alt="" srcset="">
+                    <span>SORT BY</span>
+                </div>
+                <div class="add-cmnt">
+                    <form class="comment-form" action="/watch/add-comment-on/chun-li-sexy-dress/6/" method="POST">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="t1j1A25oPuhS66fxUdl9yaV35FBS57GBPTiqguoNaLqTEgBZYorupdo5nPkhVy6n">
+                        <input type="text" name="text" placeholder="Add a Public Comment" maxlength="10000" required="" id="id_text">
+                        <button class="send-comment-button" type="submit"><img src="/static/images/send.png" alt=""></button>
+                    </form>
+                </div>
+                {% for comment in current_video_comments %}
+                    <div class="old-cmnt">
+                    <a href=""><img src="" alt="" srcset=""></a>
+                    <div>
+                        <h3><a href="">{{ comment.user.username }}</a> <span>{{ comment.created_date | timesince }}</span></h3>
+                        <p>{{ comment.text }}</p>
+                        <div class="cmnt-react">
+                            <img src="{{ comment.user.profile_picture.url }}" alt="" srcset="">
+                            <span></span>
+                            <a href=""></a>
+                            <span>REPLY</span>
+                            <a href=""><img src="" alt=""></a>
+                            <a href=""><img src="" alt=""></a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="playlist-video-list">
+            {% for video in playlist.video.all %}
+                <div class="playlist-vid {% if video.slug == kwarg.video_slug %} active {% endif %}">
+                    <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=video.slug %}"><img src="{{ video.thumbnail.url }}" alt=""></a>
+                    <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=video.slug %}"><h3 class="playlist-vid-title">{{ video.title }}</h3></a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

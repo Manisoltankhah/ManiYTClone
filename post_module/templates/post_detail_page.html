@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+{% block content %}
+<div class="container play-container">
+        <div class="row">
+            <div class="play-video">
+                <video poster="{{ post.thumbnail.url }}" controls="pause">
+                    <source src="{{ post.video.url }}" type="video/mp4">
+                </video>
+                <div class="tags">
+                    <a href="">#gulabiaankhein </a> <a href="">#busking</a> <a href=""> #reactions</a>
+                </div>
+                <h3>{{ post.title }}</h3>
+                <div class="play-video-info">
+                    {% if posts.postviews_set.count == 0  %}
+                           <p>No Views Yet</p>
+                       {% else %}
+                           <p>{{ views_number }} views • {{ post.created_date|timesince }} Ago</p>
+                       {% endif %}
+
+                    <div class="Like-and-dislike-section">
+                        {# like section #}
+                        {% if user.is_authenticated %}
+                            <form class="like-form" action="{% url 'post_like' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if post_is_liked %}
+                                <button type="submit" name="blogpost_id" value="{{ post.id }}" class="btn btn-info">
+                                    Unlike
+                                </button>
+                                {% else %}
+                                <button type="submit" name="blogpost_id" value="{{ post.id }}" class="btn btn-info"><img src="{% static 'images/like.png' %}"></button>
+                                {% endif %}
+                            </form>
+                                    <p class="text-secondary">{{ post.number_of_likes }} Like{{ post.number_of_likes|pluralize }}</p>
+                                {% endif %}
+                            
+
+{#                      <a href=""><img src="{% static 'images/like.png' %}"></a>#}
+                        {# dislike section #}
+                        {% if user.is_authenticated %}
+                            <form class="dislike-form" action="{% url 'post_dislike' post.slug %}" method="POST">
+                                {% csrf_token %}
+                                {% if post_is_liked %}
+                                <button type="submit" name="blogpost_id" value="{{ post.id }}" class="btn btn-info">
+                                    Unlike
+                                </button>
+                                {% else %}
+                                <button type="submit" name="blogpost_id" value="{{ post.id }}" class="btn btn-info"><img src="{% static 'images/dislike.png' %}"></button>
+                                {% endif %}
+                            </form>
+                            <p class="text-secondary">{{ post.number_of_dislikes }} Dislikes{{ post.number_of_dislikes|pluralize }}</p>
+                                {% else %}
+                                <a class="btn btn-outline-info" href="{% url 'login-page' %}?next={{ request.path }}">Log in to like</a><br>
+                        {% endif %}
+                        <a href="http://"><img src="{% static 'images/share.png' %}">SHARE</a>
+                        <a href="http://"><img src="{% static 'images/save.png' %}">SAVE</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="owner">
+                    <a href="{% url 'channel-home-page' slug=post.channel.slug %}"><img src="{{ post.channel.profile_picture.url }}"></a>
+                    <div>
+                        <a href="{% url 'channel-home-page' slug=post.channel.slug %}"><p> {{ post.channel.username }} </p></a>
+                        <span>37.7K subscribers</span>
+                    </div>
+                    {% if user.is_authenticated %}
+                    	<button type="button">Subscribe</button>
+                    {% else %}
+                        <a class="btn btn-outline-info" href="{% url 'login-page' %}?next={{ request.path }}">Log in to Subscribe</a><br>
+                    {% endif %} 
+                
+                </div>
+                <div class="vid-des">
+                    <p>
+                        {{ post.description }}
+                    </p>
+                    <hr>
+                    <div class="cmnt">
+                        <h4>{{ post.postcomments_set.count }} Commnets</h4>
+                        <img src="./images/menu.png" alt="" srcset="">
+                        <span>SORT BY</span>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div class="add-cmnt">
+                        <form class="comment-form" action="{% url 'add_post_comment' slug=post.slug pk=post.pk %}" method="POST">
+                            {% csrf_token %}
+                            {{ post_comment_form }}
+                            <button class="send-comment-button" type="submit"><img src="{% static 'images/send.png' %}" alt=""></button>
+                        </form>
+                    </div>
+                    {% else %}
+                        <p>For Commenting you have to <a href="{% url 'login-page' %}">login</a> or if you don't have account here you have to <a href="{% url 'sign_up' %}">sign up</a></p>
+                    {% endif %}
+                    {% for post_comment in post_comments %}
+                    <div class="old-cmnt">
+                        <a href="{% url 'channel-home-page' slug=post.channel.slug %}"><img src="{{ post_comment.user.profile_picture.url }}" alt="" srcset=""></a>
+                        <div>
+                            <h3>
+                                <a href="{% url 'channel-home-page' slug=post.channel.slug %}">{{ post_comment.user.username }}</a> <span>{{ post_comment.created_date| timesince }} Ago</span>
+                            </h3>
+                            <p>{{ post_comment.text }}</p>
+
+                                <div class="cmnt-react">
+                                    <img src="./images/like.png" alt="" srcset="">
+                                    <span></span>
+                                    <a href=""></a>
+                                    <span>REPLY</span>
+                                    {% if post_comment.user.id == current_user %}
+                                        <a href="{% url 'delete_post_comment' slug=post.slug pk=post_comment.id %}"><img src="{% static 'admin/img/icon-deletelink.svg' %}" alt=""></a>
+                                        <a href="{% url 'edit_post_comment' slug=post.slug pk=post_comment.id %}"><img src="{% static 'admin/img/icon-changelink.svg' %}" alt=""></a>
+                                    {% endif %}
+                                </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <hr class="hide-hr">
+            </div>
+            <div class="right-sidebar">
+                {% for posts in related_posts %}
+                    {% if posts.id != related_posts.id %}
+                        <div class="side-video-list">
+                            <a href="{% url 'post_detail_page' slug=posts.slug %}" class="small-thumbnail"> <img src="{{ posts.thumbnail.url }}" alt="" srcset=""></a>
+                            <div class="vid-info">
+                                <a href="{% url 'post_detail_page' slug=posts.slug %}">{{ posts.title }}</a>
+                                <div class="post-channel-info">
+                                    <a href="{% url 'channel-home-page' slug=post.channel.slug %}"><img src="{{ posts.channel.profile_picture.url }}" alt=""></a>
+                                    <a href="{% url 'channel-home-page' slug=post.channel.slug %}"><p>{{ posts.channel.username }}</p></a>
+                                </div>
+
+                                {% if posts.postviews_set.count == 0  %}
+                                    <p>No Views Yet</p>
+                                    <p>{{ posts.created_date| timesince }} ago</p>
+                                {% else %}
+                                    <p>{{ posts.postviews_set.count }} Views</p>
+                                    <p>{{ posts.created_date| timesince }} ago</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

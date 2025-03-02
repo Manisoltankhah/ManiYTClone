@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Edit comment{% endblock %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input class="edit-comment-submit" type="submit" value="Edit"/>
+    </form>
+{% endblock %}

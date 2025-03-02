@@ -1,0 +1,52 @@
+{% load static %}
+<nav class="flex-div">
+        <div class="nav-left flex-div">
+            <img src="{% static 'images/menu.png' %}" class="menu-icon" alt="" srcset="">
+            <img src="{% static 'images/menu.png' %}./images/logo.png" class="logo" alt="" srcset="">
+        </div>
+        <div class="nav-middle flex-div">
+           <div class="search-box flex-div">
+               <input type="text" placeholder="Search..">
+               <img src="{% static 'images/search.png' %}" alt="" srcset="">
+           </div>
+           <img src="{% static 'images/voice-search.png' %}" class="mic-icon" alt="" srcset="">
+        </div>
+        <div class="nav-right flex-div">
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'create_post_page' %}"><img src="{% static 'images/upload.png' %}" alt="" srcset=""></a>
+        {% endif %}
+            <img src="{% static 'images/more.png' %}" alt="" srcset="">
+            <img src="{% static 'images/notification.png' %}" alt="" srcset="">
+            {% if request.user.profile_picture %}
+                <a  href="{% url 'channel-home-page' slug=request.user.username %}"><img class="channel-img" src="{{ request.user.profile_picture.url }}" alt="" srcset=""></a>
+            {% endif %}
+            <img src="" class="user-icon" alt="" srcset="">
+            {% if not request.user.is_authenticated %}
+                <a href="{% url 'sign_up' %}">Signup</a><p> / </p><a href="{% url 'login-page' %}">login</a>
+            {% endif %}
+        {% if request.user.is_superuser %}
+            <a href="{% url 'admin:index' %}"><img src="{% static 'images/admin.png' %}" alt=""></a>
+        {% endif %}
+
+
+        </div>
+    </nav>
+    <div class="sidebar">
+         <div class="shortcut-links">
+             <a href="{% url 'home_page' %}"><img src="{% static 'images/home.png' %}"><p>Home</p></a>
+             <a href="#"><img src="{% static 'images/explore.png' %}"><p>explore</p></a>
+             <a href="#"><img src="{% static 'images/subscriprion.png' %}"><p>subscriprion</p></a>
+             <hr>
+             <a href="#"><img src="{% static 'images/library.png' %}"><p>library</p></a>
+             <a href="#"><img src="{% static 'images/history.png' %}"><p>History</p></a>
+             <a href="#"><img src="{% static 'images/playlist.png' %}"><p>playlist</p></a>
+             <a href="#"><img src="{% static 'images/messages.png' %}"><p>messages</p></a>
+             <a href="#"><img src="{% static 'images/show-more.png' %}"><p>Show more</p></a>
+             <hr>
+            </div>
+          <div class="subscribed-list">
+              <h3>SUBSCRIPTIONS</h3>
+              <a href="#"><img src=""><p></p></a>
+
+            </div>
+        </div>
