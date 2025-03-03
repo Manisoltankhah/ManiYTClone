@@ -13,9 +13,9 @@ class TestViews(TestCase):
         self.login_page = reverse('login-page')
         self.home_url = reverse('home_page')
         self.user_data = {
+            'username': 'testuser',
             'email': 'test@example.com',
-            'username': 'test123',
-            'password': 'testpassword123'
+            'password': 'SecurePass123!'
         }
         self.existing_user = User.objects.create_user(
             email='existing@gmail.com',
