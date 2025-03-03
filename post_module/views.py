@@ -1,108 +1,10 @@
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.serializers import serialize
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.loader import render_to_string
 from django.urls import reverse
-from django.utils.decorators import method_decorator
-from django.utils.text import slugify
-
 from django.views.generic import DetailView, CreateView, View
-from account_module.models import User
 from post_module.forms import PostCommentForm, PostCommentUpdateForm, PostCreatingForm
 from post_module.models import Post, PostViews, PostComments, Playlist, PlaylistVideo
 from tools.Http_service import get_user_ip
-from rest_framework import generics, status
-from rest_framework.response import Response
-from rest_framework.views import APIView
-# from .serializers import PostSerializer, PostCommentSerializer, PlaylistSerializer, PlaylistVideosSerializer
-
-
-# APIs for all post_module models
-# class PostListAPIView(APIView):
-#     def get(self, request, format=None):
-#         title = request.query_params.get("title","")
-#
-#         if title:
-#             posts = Post.objects.filter(title= title)
-#         else:
-#             posts = Post.objects.all()
-#         serializer = PostSerializer(posts, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#     def delete(self, request, *args, **kwargs):
-#         Post.objects.all().delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#
-# class PostRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Post.objects.all()
-#     serializer_class = PostSerializer
-#     lookup_field = 'pk'
-#
-#
-# class PostCommentAPIView(APIView):
-#     def get(self, request, format=None):
-#         text = request.query_params.get("text", "")
-#         if text:
-#             post_comments = PostComments.objects.filter(text=text)
-#         else:
-#             post_comments = PostComments.objects.all()
-#         serializer = PostCommentSerializer(post_comments, many=True)
-#         return Response(serializer.data, status=status.HTTP_200_OK)
-#
-#     def delete(self, request, *args, **kwargs):
-#         PostComments.objects.all().delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#
-# class PostCommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = PostComments.objects.all()
-#     serializer_class = PostCommentSerializer
-#     lookup_field = 'pk'
-#
-#
-# class PlaylistAPIView(APIView):
-#     def get(self, request, format=None):
-#         title = request.query_params.get("title", "")
-#         if title:
-#             playlist = Playlist.objects.filter(title= title)
-#         else:
-#             playlist = Playlist.objects.all()
-#         serializer = PlaylistSerializer(playlist, many=True)
-#         return Response(serializer.data ,status=status.HTTP_200_OK)
-#
-#     def delete(self, request, *args, **kwargs):
-#         Playlist.objects.all().delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#
-# class PlaylistRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Playlist.objects.all()
-#     serializer_class = PlaylistSerializer
-#     lookup_field = 'pk'
-#
-#
-# class PlaylistVideoAPIView(APIView):
-#     def get(self, request, format=None):
-#         id = request.query_params.get("id", "")
-#         if id:
-#             playlist_video = PlaylistVideo.objects.filter(id=id)
-#         else:
-#             playlist_video = PlaylistVideo.objects.all()
-#         serializer = PlaylistVideosSerializer(playlist_video, many=True)
-#         return Response(serializer.data ,status=status.HTTP_200_OK)
-#
-#     def delete(self, request, *args, **kwargs):
-#         PlaylistVideo.objects.all().delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#
-# class PlaylistVideoRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = PlaylistVideo.objects.all()
-#     serializer_class = PlaylistVideosSerializer
-#     lookup_field = 'pk'
 
 
 # Actual Views

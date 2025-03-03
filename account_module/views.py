@@ -2,32 +2,8 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
-from rest_framework import status, generics
-from rest_framework.response import Response
 from .forms import RegisterForm, LoginForm
 from .models import User
-from api.serializer import UserSerializer
-from rest_framework.permissions import AllowAny
-
-
-# class UserListAPIView(generics.ListAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#
-#     def delete(self, request, *args, **kwargs):
-#         User.objects.all().delete()
-#         return Response(status=status.HTTP_204_NO_CONTENT)
-#
-#
-# class CreateUserView(generics.CreateAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = User
-#     permission_classes = [AllowAny]
-#
-# class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     lookup_field = 'pk'
 
 
 class RegisterView(View):

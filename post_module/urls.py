@@ -19,17 +19,4 @@ urlpatterns = [
     # Likes and Dislikes
     path('post-like/<slug:slug>', views.BlogPostLike, name="post_like"),
     path('post-dislike/<slug:slug>', views.BlogPostDisLike, name="post_dislike"),
-
-    # API Path
-    # path('posts-apis/', views.PostListAPIView.as_view(), name='posts-Apiview'),
-    # path('posts-update-apis/<int:pk>', views.PostRetrieveUpdateDestroy.as_view(), name='update'),
-    #
-    # path('posts-comments-apis/', views.PostCommentAPIView.as_view(), name='comments_apis'),
-    # path('posts-comments-update-apis/<int:pk>', views.PostCommentRetrieveUpdateDestroy.as_view(), name='update_comment'),
-    #
-    # path('posts-playlists-apis/', views.PlaylistAPIView.as_view(), name='playlist_apis'),
-    # path('posts-playlists-update-apis/<int:pk>', views.PlaylistRetrieveUpdateDestroy.as_view(), name='update_playlist'),
-    #
-    # path('posts-playlists-video-apis/', views.PlaylistVideoAPIView.as_view(), name='playlist_video_apis'),
-    # path('posts-playlists-video-update-apis/<int:pk>', views.PlaylistVideoRetrieveUpdateDestroy.as_view(), name='update_playlist_video'),
 ]
