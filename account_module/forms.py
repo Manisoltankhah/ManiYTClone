@@ -44,6 +44,7 @@ class LoginForm(forms.Form):
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
         validators=[
+            validators.MinLengthValidator(5),
             validators.MaxLengthValidator(100),
             validators.EmailValidator,
         ]
@@ -52,6 +53,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
         validators=[
+            validators.MinLengthValidator(5),
             validators.MaxLengthValidator(100)
         ]
     )
