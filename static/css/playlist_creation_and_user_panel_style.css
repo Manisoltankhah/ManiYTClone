@@ -1,0 +1,265 @@
+
+.user-panel {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    margin-left: 150px;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+    background-color: #e0e0e0;
+}
+.profile-avatar img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px
+}
+
+.profile-info h1 {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #1a1a1a;
+}
+
+textarea{
+    width: 394px;
+    height: 36px;
+}
+
+.stats {
+    display: flex;
+    gap: 20px;
+    color: #666666;
+}
+
+/* Playlist Page Styles */
+.playlist-creator {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.playlist-form {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+}
+input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-top: 10px;
+    padding-bottom: 35px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-top: 10px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/*input[type="text"],*/
+/*input[type="email"],*/
+/*input[type="password"],*/
+/*textarea,*/
+/*select {*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    border: 1px solid #e0e0e0;*/
+/*    border-radius: 4px;*/
+/*    font-size: 16px;*/
+/*}*/
+
+
+.video-selection-grid {
+    display: grid;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.video-select-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background: #f8f9fa;
+}
+
+.thumbnail-small {
+    width: 120px;
+    height: 70px;
+    background: #e0e0e0;
+    margin-right: 15px;
+}
+
+.video-meta {
+    flex-grow: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.video-duration {
+    color: #666;
+    margin: 0 15px;
+}
+
+/* Settings Page Styles */
+.profile-edit-container {
+    margin-left: 120px;
+    /*padding: 20px;*/
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.avatar-upload {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.avatar-preview img{
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*gap: 20px;*/
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #e0e0e0;
+}
+
+.avatar-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    border: 2px solid #cccccc;
+}
+
+.form-actions {
+    margin-top: 2rem;
+    display: flex;
+    gap: 15px;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.create-btn {
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    padding: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .video-select-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .thumbnail-small {
+        width: 100%;
+        height: 150px;
+        margin-bottom: 10px;
+    }
+
+    .settings-form input[type="password"] {
+        margin-bottom: 15px;
+    }
+}
+/* Quick Links Box */
+.quick-links {
+    position: absolute;
+    top: 35px;
+    right: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    width: 200px;
+    z-index: 100;
+}
+
+.links-header {
+    padding: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+    color: #1a1a1a;
+}
+
+.links-list {
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+}
+
+.links-list li {
+    padding: 8px 15px;
+    transition: background-color 0.2s;
+}
+
+.links-list li:hover {
+    background-color: #f8f9fa;
+}
+
+.links-list a {
+    color: #606060;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.links-list a:hover {
+    color: #ff0000;
+}
+
+/* Adjust profile header positioning */
+.profile-header {
+    position: relative;
+    padding-right: 220px; /* Make space for quick links */
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .quick-links {
+        position: static;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .profile-header {
+        padding-right: 0;
+    }
+}

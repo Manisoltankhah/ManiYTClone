@@ -42,16 +42,17 @@ class RegisterForm(forms.Form):
 
 class LoginForm(forms.Form):
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={'placeholder': 'Email'}),
+        widget=forms.EmailInput(attrs={'placeholder': 'Email', 'autocomplete': 'email'}),
         validators=[
             validators.MinLengthValidator(5),
             validators.MaxLengthValidator(100),
-            validators.EmailValidator,
-        ]
+            validators.EmailValidator(message="Enter a valid email address."),
+        ],
+        help_text="Enter a valid email address (max 100 characters min 5 characters)."
     )
 
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'placeholder': 'Password'}),
+        widget=forms.PasswordInput(attrs={'placeholder': 'Password', 'autocomplete': 'password'}),
         validators=[
             validators.MinLengthValidator(5),
             validators.MaxLengthValidator(100)

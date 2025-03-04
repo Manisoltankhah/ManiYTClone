@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	Create Playlist
+{% endblock %}
+{% block content %}
+	<div class="user-panel">
+        {% if request.user.is_authenticated %}
+            {% if request.user.id == channel_info.id  %}
+                <div class="quick-links">
+                    <div class="links-header">Quick Access</div>
+                    <ul class="links-list">
+                        <li><a href="#videos">My Videos</a></li>
+                        <li><a href="#analytics">Analytics</a></li>
+                        <li><a href="{% url 'playlist-create-page' slug=channel_info.slug %}">Playlist Creation</a></li>
+                        <li><a href="{% url 'user-panel-page' slug=channel_info.slug %}">User panel</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %} 
+        <div class="profile-header">
+            <div class="profile-avatar"></div>
+            <div class="profile-info">
+                <h1>Create New Playlist</h1>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab">Videos</a>
+            <div class="nav-tab active">Playlists</div>
+            <a href="settings.html" class="nav-tab">Settings</a>
+        </div>
+
+        <div class="playlist-creator">
+            <form class="playlist-form">
+                <div class="form-group">
+                    <label>Playlist Title</label>
+                    <input type="text" placeholder="Enter playlist name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea rows="3" placeholder="Add description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Visibility</label>
+                    <select>
+                        <option>Public</option>
+                        <option>Unlisted</option>
+                        <option>Private</option>
+                    </select>
+                </div>
+
+                <h3>Add Videos</h3>
+                <div class="video-selection-grid">
+                    <!-- Video Items -->
+                    <div class="video-select-item">
+                        <div class="thumbnail-small"></div>
+                        <div class="video-meta">
+                            <span class="video-title">Tutorial Part 1</span>
+                            <span class="video-duration">12:30</span>
+                            <input type="checkbox">
+                        </div>
+                    </div>
+                    <!-- Repeat more video items -->
+                </div>
+
+                <button class="btn create-btn">Create Playlist</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

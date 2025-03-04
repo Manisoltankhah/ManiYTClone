@@ -39,9 +39,10 @@ class PostCreatingForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Get the user from the view
         super().__init__(*args, **kwargs)
-         # Filter playlists to show only those created by the current user
         if user:
             self.fields['playlists'].queryset = Playlist.objects.filter(channel=user, is_active=True)
+
+
 class PostCommentForm(forms.ModelForm):
     class Meta:
         model = PostComments
@@ -54,6 +55,7 @@ class PostCommentForm(forms.ModelForm):
                 "placeholder": "Add a Public Comment"
             })
         }
+
 
 class PostCommentUpdateForm(forms.ModelForm):
     class Meta:

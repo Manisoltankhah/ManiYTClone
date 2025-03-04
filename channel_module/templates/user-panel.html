@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	User Panel
+{% endblock %}
+{% block content %}
+	<div class="user-panel">
+        {% if request.user.is_authenticated %}
+            {% if request.user.id == channel_info.id  %}
+                <div class="quick-links">
+                    <div class="links-header">Quick Access</div>
+                    <ul class="links-list">
+                        <li><a href="#videos">My Videos</a></li>
+                        <li><a href="#analytics">Analytics</a></li>
+                        <li><a href="{% url 'playlist-create-page' slug=current_user.slug %}">Playlist Creation</a></li>
+                        <li><a href="{% url 'user-panel-page' slug=current_user.slug %}">User panel</a></li>
+                    </ul>
+                </div>
+            {% endif %}
+        {% endif %} 
+        <div class="profile-header">
+            <div class="profile-avatar"><img src="{{ current_user.profile_picture.url }}" alt=""></div>
+            <div class="profile-info">
+                <h1>Account Settings</h1>
+            </div>
+        </div>
+
+        <div class="profile-edit-container">
+            <form class="settings-form" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                {{ edit_form }}
+
+                <div class="form-actions">
+                    <button class="btn save-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

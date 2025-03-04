@@ -70,6 +70,7 @@ REST_FRAMEWORK = {
 SESSION_COOKIE_AGE = 1209600
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = False
+SESSION_SAVE_EVERY_REQUEST = True
 
 INTERNAL_IPS = [
     '127.0.0.1',
@@ -158,7 +159,7 @@ STATICFILES_DIRS = [
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',  # Local memory cache
