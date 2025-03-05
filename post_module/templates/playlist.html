@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{% static 'D:\youtube_clone_project\static\css\style.css' %}">
 {% endblock %}
 {% block content %}
+    {% if playlist.video.first %}
     <h3 class="heading">Playlist</h3>
     <div class="playlist-container">
         <div class="playlist-main-video">
@@ -63,5 +64,6 @@
             {% endfor %}
         </div>
     </div>
+    {% endif %} 
 {% endblock %}
 

@@ -1,13 +1,19 @@
 from django import forms
 
 from account_module.models import User
-from post_module.models import Playlist
+from post_module.models import Playlist, Post
 
 
 class EditProfileModelForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'profile_picture', 'channel_banner', 'about_user']
+        labels = {
+            'username': '',
+            'profile_picture': '',
+            'channel_banner': '',
+            'about_user': '',
+        }
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control'}),
             'channel_banner': forms.FileInput(attrs={'placeholder': 'channel banner'}),
@@ -16,23 +22,25 @@ class EditProfileModelForm(forms.ModelForm):
         }
 
 
-class PlaylistForm(forms.ModelForm):
+class PlaylistCreationForm(forms.ModelForm):
+    video = forms.ModelMultipleChoiceField(
+        queryset=Post.objects.none(),
+        widget=forms.SelectMultiple(),
+        required=False,
+        label=''
+    )
+
     class Meta:
         model = Playlist
-        fields = ['title', 'is_active', 'thumbnail_url', 'video']
+        fields = ['title']
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter playlist title'
-            }),
-            'thumbnail_url': forms.URLInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Optional thumbnail URL'
-            }),
-            'is_active': forms.CheckboxInput(attrs={
-                'class': 'form-check-input'
-            }),
-            'video': forms.CheckboxSelectMultiple(attrs={
-                'class': 'form-check-input'
-            }),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'title'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(PlaylistCreationForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['video'].queryset = Post.objects.filter(channel=user, is_active=True)
+
+

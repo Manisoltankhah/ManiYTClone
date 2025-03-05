@@ -11,7 +11,6 @@ class RegisterForm(forms.Form):
             validators.MaxLengthValidator(100),
             validators.EmailValidator(message="Enter a valid email address."),
         ],
-        help_text="Enter a valid email address (max 100 characters min 5 characters)."
     )
 
     username = forms.CharField(
@@ -32,11 +31,6 @@ class RegisterForm(forms.Form):
                 message="Password must contain: 1 uppercase, 1 lowercase, 1 number, 1 special character"
             )
         ],
-        help_text=(
-            "Minimum 12 characters containing: "
-            "1 uppercase letter, 1 lowercase letter, "
-            "1 number, and 1 special character"
-        )
     )
 
 

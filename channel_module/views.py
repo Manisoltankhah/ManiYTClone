@@ -1,12 +1,12 @@
 from django.http import HttpResponseForbidden, HttpRequest
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.views import View
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from account_module.models import User
-from channel_module.forms import EditProfileModelForm
-from post_module.models import Post
+from channel_module.forms import EditProfileModelForm, PlaylistCreationForm
+from post_module.models import Post, Playlist
 
 
 class ChannelHomeView(TemplateView):
@@ -46,21 +46,20 @@ class UserPanelView(View):
         return render(request, 'user-panel.html', context)
 
 
-class CreatePlaylistView(View):
-    def get(self):
-        channel_slug = self.kwargs['slug']
-        user = User.objects.filter(slug__iexact=channel_slug).first()
-        current_user = User.objects.filter(id=self.request.user.id).first()
-        edit_profile_form = EditProfileModelForm(instance=current_user)
-        context = {'edit_profile_form': edit_profile_form,
-                   'current_user': current_user,
-                   'channel_info': user
-        }
-        return render(self.request, 'user-panel.html', context)
+class CreatePlaylistView(CreateView):
+    model = Playlist
+    form_class = PlaylistCreationForm
+    template_name = 'Create_Playlist.html'
+    success_url = reverse_lazy('home_page')
 
-    def post(self):
-        current_user = User.objects.filter(id=self.request.user.id).first()
-        edit_profile_form = EditProfileModelForm(self.request.POST, self.request.FILES, instance=current_user)
-        if edit_profile_form.is_valid():
-            edit_profile_form.save(commit=True)
-            return redirect(reverse('channel-home', args=[current_user.slug]))
+    def get_form_kwargs(self):
+        kwargs = super(CreatePlaylistView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.channel = self.request.user
+        form.instance.is_active = True
+        response = super(CreatePlaylistView, self).form_valid(form)
+        self.object.video.set(form.cleaned_data['video'])
+        return response

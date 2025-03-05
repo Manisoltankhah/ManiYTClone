@@ -32,39 +32,41 @@
         </div>
 
         <div class="playlist-creator">
-            <form class="playlist-form">
-                <div class="form-group">
-                    <label>Playlist Title</label>
-                    <input type="text" placeholder="Enter playlist name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea rows="3" placeholder="Add description"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Visibility</label>
-                    <select>
-                        <option>Public</option>
-                        <option>Unlisted</option>
-                        <option>Private</option>
-                    </select>
-                </div>
-
-                <h3>Add Videos</h3>
-                <div class="video-selection-grid">
-                    <!-- Video Items -->
-                    <div class="video-select-item">
-                        <div class="thumbnail-small"></div>
-                        <div class="video-meta">
-                            <span class="video-title">Tutorial Part 1</span>
-                            <span class="video-duration">12:30</span>
-                            <input type="checkbox">
-                        </div>
-                    </div>
-                    <!-- Repeat more video items -->
-                </div>
+            <form class="playlist-form" method="post">
+                {% csrf_token %}
+                {{ form }}
+{#                <div class="form-group">#}
+{#                    <label>Playlist Title</label>#}
+{#                    <input type="text" placeholder="Enter playlist name" required>#}
+{#                </div>#}
+{#                #}
+{#                <div class="form-group">#}
+{#                    <label>Description</label>#}
+{#                    <textarea rows="3" placeholder="Add description"></textarea>#}
+{#                </div>#}
+{##}
+{#                <div class="form-group">#}
+{#                    <label>Visibility</label>#}
+{#                    <select>#}
+{#                        <option>Public</option>#}
+{#                        <option>Unlisted</option>#}
+{#                        <option>Private</option>#}
+{#                    </select>#}
+{#                </div>#}
+{##}
+{#                <h3>Add Videos</h3>#}
+{#                <div class="video-selection-grid">#}
+{#                    <!-- Video Items -->#}
+{#                    <div class="video-select-item">#}
+{#                        <div class="thumbnail-small"></div>#}
+{#                        <div class="video-meta">#}
+{#                            <span class="video-title">Tutorial Part 1</span>#}
+{#                            <span class="video-duration">12:30</span>#}
+{#                            <input type="checkbox">#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <!-- Repeat more video items -->#}
+{#                </div>#}
 
                 <button class="btn create-btn">Create Playlist</button>
             </form>

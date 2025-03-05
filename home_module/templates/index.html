@@ -56,24 +56,26 @@
     <hr>
     <div class="playlist">
         {% for playlist in playlists %}
-            <div>
-                <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=playlist.video.first.slug %}">
-                    <div class="rectangle_wrapper">
-                    <div class="rectangle1"></div>
-                    <div class="rectangle2"></div>
-                    <img src="{{ playlist.thumbnail_url }}" class="rectangle3">
-                    </div>
-                </a>
-
-                <div class="flex-div">
-                    <img src="">
-                    <div class="vid-info">
-                        <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=playlist.video.first.slug %}">{{ playlist.title }}</a>
-                        <p>{{ playlist.channel.username }}</p>
-                        <p>2 Views • 2 days ago</p>
+            {% if playlist.video.first %}
+                <div>
+                    <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=playlist.video.first.slug %}">
+                        <div class="rectangle_wrapper">
+                        <div class="rectangle1"></div>
+                        <div class="rectangle2"></div>
+                        <img src="{{ playlist.thumbnail_url }}" class="rectangle3">
+                        </div>
+                    </a>
+    
+                    <div class="flex-div">
+                        <img src="">
+                        <div class="vid-info">
+                            <a href="{% url 'playlist_detail_page' slug=playlist.slug video_slug=playlist.video.first.slug %}">{{ playlist.title }}</a>
+                            <p>{{ playlist.channel.username }}</p>
+                            <p>2 Views • 2 days ago</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %} 
         {% endfor %}
     </div>
 </div>

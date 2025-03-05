@@ -11,10 +11,12 @@ class IndexPageView(TemplateView):
         context = super(IndexPageView, self).get_context_data()
         posts = Post.objects.filter(is_active=True).order_by('-created_date')[:10]
         playlists = Playlist.objects.filter(is_active=True).order_by('-created_date')[:10]
-
         for playlist in playlists:
-            thumbnail = playlist.video.first().thumbnail.url
-            playlist.thumbnail_url = playlist.video.first().thumbnail.url
+            if playlist.video.first():
+                # thumbnail = playlist.video.first().thumbnail.url
+                playlist.thumbnail_url = playlist.video.first().thumbnail.url
+            # else:
+
         playlists = playlists
         most_viewed_posts = Post.objects.annotate(view_count=Count('postviews')).order_by('-view_count').filter(is_active=True, view_count__gt=0)[:10]
         context['playlists'] = playlists
