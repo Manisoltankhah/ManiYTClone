@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+	History
+{% endblock %}
+{% block content %}
+	<div class="history-container">
+    <header class="history-header">
+        <h1>YouTube History</h1>
+        <p>Here's a list of videos you've watched recently.</p>
+    </header>
+
+    <div class="video-list">
+        {% for video in watched_videos %}
+            <div class="video-item">
+                <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                <div class="video-details">
+                    <h3 class="video-title">{{ video.title }}</h3>
+                    <p class="video-timestamp">Watched on: {{ video.watched_at|date:"F j, Y" }}</p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No videos in your history yet.</p>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}
