@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.views.generic import DetailView, CreateView, View
+from django.views.generic import DetailView, CreateView, View, TemplateView
 from post_module.forms import PostCommentForm, PostCommentUpdateForm, PostCreatingForm
 from post_module.models import Post, PostViews, PostComments, Playlist, PlaylistVideo
 from tools.Http_service import get_user_ip
@@ -102,7 +102,7 @@ class PlaylistDetailView(DetailView):
         return context
 
 
-def BlogPostLike(request, slug):
+def PostLike(request, slug):
     post = get_object_or_404(Post, id=request.POST.get('blogpost_id'))
     if post.likes.filter(id=request.user.id).exists():
         post.likes.remove(request.user)
@@ -114,7 +114,7 @@ def BlogPostLike(request, slug):
     return HttpResponseRedirect(reverse('post_detail_page', args=[str(slug)]))
 
 
-def BlogPostDisLike(request, slug):
+def PostDisLike(request, slug):
     post = get_object_or_404(Post, id=request.POST.get('blogpost_id'))
     if post.dislike.filter(id=request.user.id).exists():
         post.dislike.remove(request.user)
@@ -147,6 +147,9 @@ def delete_comment(request, pk, slug):
         PostComments.objects.get(pk=pk).delete()
     return redirect('post_detail_page', slug=slug)
 
+
+class HistoryView(TemplateView):
+    template_name = 'history.html'
 
 
 

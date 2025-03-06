@@ -18,8 +18,10 @@ class IndexPageView(TemplateView):
             # else:
 
         playlists = playlists
+        current_user = self.request.user
         most_viewed_posts = Post.objects.annotate(view_count=Count('postviews')).order_by('-view_count').filter(is_active=True, view_count__gt=0)[:10]
         context['playlists'] = playlists
+        context['current_user'] = current_user
         context['most_viewed_posts'] = most_viewed_posts
         context['posts'] = posts
         return context

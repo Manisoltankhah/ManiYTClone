@@ -64,6 +64,7 @@ class PostViews(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE, verbose_name='Post')
     ip = models.CharField(max_length=30, verbose_name='User IP', blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='User View', blank=True, null=True)
+    created_date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return f'{self.post.title} / {self.ip}'

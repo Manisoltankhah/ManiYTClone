@@ -37,14 +37,18 @@
          <div class="shortcut-links">
              <a href="{% url 'home_page' %}"><img src="{% static 'images/home.png' %}"><p>Home</p></a>
              <a href="#"><img src="{% static 'images/explore.png' %}"><p>explore</p></a>
-             <a href="#"><img src="{% static 'images/subscriprion.png' %}"><p>subscriprion</p></a>
-             <hr>
-             <a href="#"><img src="{% static 'images/library.png' %}"><p>library</p></a>
-             <a href="#"><img src="{% static 'images/history.png' %}"><p>History</p></a>
-             <a href="#"><img src="{% static 'images/playlist.png' %}"><p>playlist</p></a>
-             <a href="#"><img src="{% static 'images/messages.png' %}"><p>messages</p></a>
-             <a href="#"><img src="{% static 'images/show-more.png' %}"><p>Show more</p></a>
-             <hr>
+             {% if request.user.is_authenticated %}
+                <a href="#"><img src="{% static 'images/subscriprion.png' %}"><p>subscriprion</p></a>
+                <hr>
+                <a href="#"><img src="{% static 'images/library.png' %}"><p>library</p></a>
+             
+             	<a href="{% url 'history' slug=request.user.slug %}"><img src="{% static 'images/history.png' %}"><p>History</p></a>
+             
+                <a href="#"><img src="{% static 'images/playlist.png' %}"><p>playlist</p></a>
+                <a href="#"><img src="{% static 'images/messages.png' %}"><p>messages</p></a>
+                <a href="#"><img src="{% static 'images/show-more.png' %}"><p>Show more</p></a>
+                <hr>
+             {% endif %}
             </div>
           <div class="subscribed-list">
               <h3>SUBSCRIPTIONS</h3>

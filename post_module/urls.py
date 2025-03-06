@@ -17,6 +17,8 @@ urlpatterns = [
     path('watch/delete-comment/<slug:slug>/<int:pk>/', views.delete_comment, name='delete_post_comment'),
 
     # Likes and Dislikes
-    path('post-like/<slug:slug>', views.BlogPostLike, name="post_like"),
-    path('post-dislike/<slug:slug>', views.BlogPostDisLike, name="post_dislike"),
+    path('post-like/<slug:slug>', views.PostLike, name="post_like"),
+    path('post-dislike/<slug:slug>', views.PostDisLike, name="post_dislike"),
+
+    path('history/<slug:slug>', views.HistoryView.as_view(), name='history'),
 ]
