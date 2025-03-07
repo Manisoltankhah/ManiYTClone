@@ -6,22 +6,49 @@
 {% block content %}
 	<div class="history-container">
     <header class="history-header">
-        <h1>YouTube History</h1>
-        <p>Here's a list of videos you've watched recently.</p>
+        <h1>History</h1>
+        <p>Here's a list of your recent activities.</p>
     </header>
 
     <div class="video-list">
-        {% for video in watched_videos %}
+        <h3>You viewed on these videos</h3>
+        {% for post in posts %}
             <div class="video-item">
-                <img src="{{ video.thumbnail_url }}" alt="{{ video.title }}" class="video-thumbnail">
+                <a href="{% url 'post_detail_page' slug=post.slug %}"><img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" class="video-thumbnail"></a>
                 <div class="video-details">
-                    <h3 class="video-title">{{ video.title }}</h3>
-                    <p class="video-timestamp">Watched on: {{ video.watched_at|date:"F j, Y" }}</p>
+                    <a href="{% url 'post_detail_page' slug=post.slug %}"><h3 class="video-title">{{ post.title }}</h3></a>
+                    <a href="{% url 'post_detail_page' slug=post.slug %}"><p class="video-timestamp">Watched on: {{ post.created_date|date:"F j, Y" }}</p></a>
                 </div>
             </div>
         {% empty %}
             <p>No videos in your history yet.</p>
         {% endfor %}
+        
+        <h3>You liked on these videos</h3>
+        {% for liked_post in liked_posts %}
+            <div class="video-item">
+                <a href="{% url 'post_detail_page' slug=liked_post.slug %}"><img src="{{ liked_post.thumbnail.url }}" alt="{{ liked_post.title }}" class="video-thumbnail"></a>
+                <div class="video-details">
+                    <a href="{% url 'post_detail_page' slug=liked_post.slug %}"><h3 class="video-title">{{ liked_post.title }}</h3></a>
+                    <p class="video-timestamp">you have liked this <a href="{% url 'post_detail_page' slug=liked_post.slug %}">video</a></p>
+                </div>
+            </div>
+        {% empty %}
+            <p>No likes in your history yet.</p>
+        {% endfor %}
         </div>
-    </div>
+            <h3>You commented on these videos</h3>
+            {% for commented_post in commented_on_post %}
+                <div class="video-item">
+                    <a href="{% url 'post_detail_page' slug=commented_post.slug %}"><img src="{{ commented_post.thumbnail.url }}" alt="{{ commented_post.title }}" class="video-thumbnail"></a>
+                    <div class="video-details">
+                        <a href="{% url 'post_detail_page' slug=commented_post.slug %}"><h3 class="video-title">{{ commented_post.title }}</h3></a>
+                        <p class="video-timestamp">you have commented on this <a href="{% url 'post_detail_page' slug=commented_post.slug %}">video</a></p>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No Comments in your history yet.</p>
+            {% endfor %}
+        </div>
+
 {% endblock %}

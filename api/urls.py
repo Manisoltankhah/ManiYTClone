@@ -7,6 +7,8 @@ urlpatterns = [
     path('user-apis/', views.UserListAPIView.as_view(), name='user-api'),
     path('user-update-apis/<int:pk>', views.UserRetrieveUpdateDestroy.as_view(), name='user-api'),
     path('user-create-api/', views.CreateUserView.as_view(), name='user-create'),
+    path('register-api/', views.UserRegisterAPIView.as_view(), name='register'),
+    path('login-api/', views.UserLoginAPIView.as_view(), name='login'),
     path('token/', TokenObtainPairView.as_view(), name='grt_token'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 

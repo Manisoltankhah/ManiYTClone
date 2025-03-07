@@ -2,6 +2,8 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import DetailView, CreateView, View, TemplateView
+
+from account_module.models import User
 from post_module.forms import PostCommentForm, PostCommentUpdateForm, PostCreatingForm
 from post_module.models import Post, PostViews, PostComments, Playlist, PlaylistVideo
 from tools.Http_service import get_user_ip
@@ -149,7 +151,25 @@ def delete_comment(request, pk, slug):
 
 
 class HistoryView(TemplateView):
-    template_name = 'history.html'
+    template_name = 'History.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(HistoryView, self).get_context_data()
+        current_user = self.request.user
+        if current_user.is_authenticated:
+            viewed_posts = PostViews.objects.filter(user=current_user).prefetch_related('post__postviews_set', 'post__likes', 'post__dislike')
+            liked_posts = Post.objects.filter(likes=current_user).prefetch_related('likes')
+            comment_posts = PostComments.objects.filter(user=current_user).prefetch_related('post__postcomments_set')
+            commented_on_post = [comment.post for comment in comment_posts]
+            posts = [view.post for view in viewed_posts]
+            context['posts'] = posts
+            context['liked_posts'] = liked_posts
+            context['commented_on_post'] = commented_on_post
+        else:
+            context['posts'] = []
+        return context
+
+
 
 
 

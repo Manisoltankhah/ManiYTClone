@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate, login
+
 from post_module.models import Post, PostComments, Playlist, PlaylistVideo
 from account_module.models import User
 from .serializer import UserSerializer, PostSerializer, PostCommentSerializer, PlaylistSerializer, PlaylistVideosSerializer
@@ -5,12 +7,20 @@ from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.pagination import PageNumberPagination
+
+
+class ResultSetPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
 
 
 # User apis
 class UserListAPIView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    pagination_class = ResultSetPagination
 
     def delete(self, request, *args, **kwargs):
         User.objects.all().delete()
@@ -25,12 +35,37 @@ class CreateUserView(generics.CreateAPIView):
 
 class UserRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     lookup_field = 'pk'
 
 
+class UserRegisterAPIView(generics.CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "User registered successfully."}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserLoginAPIView(APIView):
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return Response({"message": "You logged in successfully."}, status=status.HTTP_200_OK)
+            return Response({"error":"Invalid credentials."}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 # all post apis
 class PostListAPIView(APIView):
+    pagination_class = ResultSetPagination
     def get(self, request, format=None):
         title = request.query_params.get("title","")
 
@@ -78,6 +113,7 @@ class PostRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PostCommentAPIView(APIView):
+    pagination_class = ResultSetPagination
     def get(self, request, format=None):
         text = request.query_params.get("text", "")
         if text:
@@ -122,6 +158,7 @@ class PostCommentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PlaylistAPIView(APIView):
+    pagination_class = ResultSetPagination
     def get(self, request, format=None):
         title = request.query_params.get("title", "")
         if title:
@@ -139,6 +176,7 @@ class PlaylistAPIView(APIView):
 class PlaylistListCreate(generics.ListCreateAPIView):
     serializer_class = PlaylistSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = ResultSetPagination
 
     def get_queryset(self):
         user = self.request.user

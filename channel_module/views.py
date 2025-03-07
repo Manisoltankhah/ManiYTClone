@@ -57,6 +57,12 @@ class CreatePlaylistView(CreateView):
         kwargs['user'] = self.request.user
         return kwargs
 
+    def get_context_data(self, **kwargs):
+        context = super(CreatePlaylistView, self).get_context_data()
+        current_user = User.objects.filter(id=self.request.user.id).first()
+        context['current_user'] = current_user
+        return context
+
     def form_valid(self, form):
         form.instance.channel = self.request.user
         form.instance.is_active = True

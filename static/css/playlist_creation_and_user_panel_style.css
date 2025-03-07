@@ -167,20 +167,37 @@ input{
 }
 
 .save-btn {
-    background-color: #007bff;
+    width: 100%;
+    background-color: #e30909;
+    border: none;
     color: white;
-}
-
-.cancel-btn {
-    background-color: #6c757d;
-    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .create-btn {
-    background-color: #28a745;
-    color: white;
     width: 100%;
-    padding: 12px;
+    background-color: #e30909;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
 }
 
 /* Responsive Design */
@@ -203,7 +220,7 @@ input{
 /* Quick Links Box */
 .quick-links {
     position: absolute;
-    top: 35px;
+    /*top: 35px;*/
     right: 20px;
     background: #ffffff;
     border-radius: 8px;

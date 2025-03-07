@@ -6,12 +6,12 @@
 {% block content %}
 	<div class="user-panel">
         {% if request.user.is_authenticated %}
-            {% if request.user.id == channel_info.id  %}
+            {% if request.user.id == current_user.id  %}
                 <div class="quick-links">
                     <div class="links-header">Quick Access</div>
                     <ul class="links-list">
                         <li><a href="{% url 'logout' %}">Logout</a></li>
-                        <li><a href="#analytics"></a></li>
+                        <li><a href="{% url 'channel-home-page' slug=current_user.slug %}">My Channel</a></li>
                         <li><a href="{% url 'playlist-create-page' slug=current_user.slug %}">Playlist Creation</a></li>
                         <li><a href="{% url 'user-panel-page' slug=current_user.slug %}">User panel</a></li>
                     </ul>

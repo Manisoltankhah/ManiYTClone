@@ -499,9 +499,13 @@ nav{
 }
 
 .channel-content{
-    padding-left: 15%;
+    /*padding-left: 40px;*/
     margin: auto;
-    grid-area: content;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: center;
+    flex-direction: column;
 }
 .channel{
     width: 86vw;

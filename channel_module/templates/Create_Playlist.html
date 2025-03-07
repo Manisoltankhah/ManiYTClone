@@ -6,39 +6,39 @@
 {% block content %}
 	<div class="user-panel">
         {% if request.user.is_authenticated %}
-            {% if request.user.id == channel_info.id  %}
+            {% if request.user.id == current_user.id  %}
                 <div class="quick-links">
                     <div class="links-header">Quick Access</div>
                     <ul class="links-list">
-                        <li><a href="#videos">My Videos</a></li>
-                        <li><a href="#analytics">Analytics</a></li>
-                        <li><a href="{% url 'playlist-create-page' slug=channel_info.slug %}">Playlist Creation</a></li>
-                        <li><a href="{% url 'user-panel-page' slug=channel_info.slug %}">User panel</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li>
+                        <li><a href="{% url 'channel-home-page' slug=current_user.slug %}">My Channel</a></li>
+                        <li><a href="{% url 'playlist-create-page' slug=current_user.slug %}">Playlist Creation</a></li>
+                        <li><a href="{% url 'user-panel-page' slug=current_user.slug %}">User panel</a></li>
                     </ul>
                 </div>
             {% endif %}
         {% endif %} 
         <div class="profile-header">
-            <div class="profile-avatar"></div>
+            <div class="profile-avatar"><img src="{{ current_user.profile_picture.url }}" alt=""></div>
             <div class="profile-info">
                 <h1>Create New Playlist</h1>
             </div>
         </div>
-
-        <div class="nav-tabs">
-            <a href="index.html" class="nav-tab">Videos</a>
-            <div class="nav-tab active">Playlists</div>
-            <a href="settings.html" class="nav-tab">Settings</a>
-        </div>
+{##}
+{#        <div class="nav-tabs">#}
+{#            <a href="index.html" class="nav-tab">Videos</a>#}
+{#            <div class="nav-tab active">Playlists</div>#}
+{#            <a href="settings.html" class="nav-tab">Settings</a>#}
+{#        </div>#}
 
         <div class="playlist-creator">
             <form class="playlist-form" method="post">
                 {% csrf_token %}
-                {{ form }}
-{#                <div class="form-group">#}
-{#                    <label>Playlist Title</label>#}
-{#                    <input type="text" placeholder="Enter playlist name" required>#}
-{#                </div>#}
+{#                {{ form }}#}
+                <div class="form-group">
+                    <label>Playlist Title</label>
+                    {{ form.title }}
+                </div>
 {#                #}
 {#                <div class="form-group">#}
 {#                    <label>Description</label>#}
@@ -54,15 +54,16 @@
 {#                    </select>#}
 {#                </div>#}
 {##}
-{#                <h3>Add Videos</h3>#}
+                <h3>Add Videos</h3>
+                {{ form.video }}
 {#                <div class="video-selection-grid">#}
 {#                    <!-- Video Items -->#}
 {#                    <div class="video-select-item">#}
 {#                        <div class="thumbnail-small"></div>#}
 {#                        <div class="video-meta">#}
-{#                            <span class="video-title">Tutorial Part 1</span>#}
+{#                            <span class="video-title"></span>#}
 {#                            <span class="video-duration">12:30</span>#}
-{#                            <input type="checkbox">#}
+{#                            {{ form.video }}#}
 {#                        </div>#}
 {#                    </div>#}
 {#                    <!-- Repeat more video items -->#}
