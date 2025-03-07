@@ -1,6 +1,3 @@
-from django.db.migrations import swappable_dependency
-from django.template.context_processors import request
-from django.template.defaulttags import comment
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse
 from account_module.models import User

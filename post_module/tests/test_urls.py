@@ -4,7 +4,7 @@ from django.urls import reverse, resolve
 from account_module.models import User
 from post_module.models import Post, Playlist, PostComments
 from post_module.views import PostDetailPage, PlaylistDetailView, AddComment, \
-    comment_edit, delete_comment, BlogPostLike, BlogPostDisLike
+    comment_edit, delete_comment, PostLike, PostDisLike
 
 class TestUrls(TestCase):
     # Testing post detail page URL
@@ -97,7 +97,7 @@ class TestUrls(TestCase):
         )
         url = reverse('post_like', args=[test_post.slug])
         print(resolve(url))
-        self.assertEqual(resolve(url).func, BlogPostLike)
+        self.assertEqual(resolve(url).func, PostLike)
 
     # Testing post dislike URL
     def test_post_dislike_url_is_resolved(self):
@@ -112,4 +112,4 @@ class TestUrls(TestCase):
         )
         url = reverse('post_dislike', args=[test_post.slug])
         print(resolve(url))
-        self.assertEqual(resolve(url).func, BlogPostDisLike)
+        self.assertEqual(resolve(url).func, PostDisLike)
