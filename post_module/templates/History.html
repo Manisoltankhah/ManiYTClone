@@ -19,6 +19,7 @@
                     <a href="{% url 'post_detail_page' slug=post.slug %}"><h3 class="video-title">{{ post.title }}</h3></a>
                     <a href="{% url 'post_detail_page' slug=post.slug %}"><p class="video-timestamp">Watched on: {{ post.created_date|date:"F j, Y" }}</p></a>
                 </div>
+            
             </div>
         {% empty %}
             <p>No videos in your history yet.</p>
@@ -45,7 +46,9 @@
                         <a href="{% url 'post_detail_page' slug=commented_post.slug %}"><h3 class="video-title">{{ commented_post.title }}</h3></a>
                         <p class="video-timestamp">you have commented on this <a href="{% url 'post_detail_page' slug=commented_post.slug %}">video</a></p>
                     </div>
-                </div>
+                    	<a href="{% url 'delete_post_comment' slug=commented_post.slug pk=commented_post.id %}"><img src="{% static 'admin/img/icon-deletelink.svg' %}" alt=""></a>
+                        <a href="{% url 'edit_post_comment' slug=commented_post.slug pk=commented_post.id %}"><img src="{% static 'admin/img/icon-changelink.svg' %}" alt=""></a>
+                    </div>
             {% empty %}
                 <p>No Comments in your history yet.</p>
             {% endfor %}

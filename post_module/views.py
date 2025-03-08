@@ -160,11 +160,16 @@ class HistoryView(TemplateView):
             viewed_posts = PostViews.objects.filter(user=current_user).prefetch_related('post__postviews_set', 'post__likes', 'post__dislike')
             liked_posts = Post.objects.filter(likes=current_user).prefetch_related('likes')
             comment_posts = PostComments.objects.filter(user=current_user).prefetch_related('post__postcomments_set')
+            comments_info = PostComments.objects.filter(user=current_user)
+
             commented_on_post = [comment.post for comment in comment_posts]
+
             posts = [view.post for view in viewed_posts]
             context['posts'] = posts
             context['liked_posts'] = liked_posts
             context['commented_on_post'] = commented_on_post
+            context['comments_info'] = comments_info
+
         else:
             context['posts'] = []
         return context
