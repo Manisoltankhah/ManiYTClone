@@ -22,7 +22,16 @@
                        {% else %}
                            <p>{{ post.postviews_set.count }} Views •   {{ post.created_date|timesince }} ago</p>
                        {% endif %}
-
+                        {% if post.channel == request.user %}
+                            <div class="action-buttons">
+                                <a href="{% url 'edit_post_page' slug=post.slug %}">
+                                    <img class="edit-post-btn" src="{% static 'admin/img/icon-changelink.svg' %}" alt="edit">
+                                </a>
+                                <a href="{% url 'delete_post_page' slug=post.slug %}">
+                                    <img class="delete-post-btn" src="{% static 'admin/img/icon-deletelink.svg' %}" alt="delete">
+                                </a>
+                            </div>
+                        {% endif %}
                    </div>
                </div>
            </div>
@@ -45,7 +54,16 @@
                            {% else %}
                                <p>{{ most_viewed_post.postviews_set.count }} Views • {{ most_viewed_post.created_date|timesince }} Ago</p>
                            {% endif %}
-
+                            {% if most_viewed_post.channel == request.user %}
+                            <div class="action-buttons">
+                                <a href="{% url 'edit_post_page' slug=most_viewed_post.slug %}">
+                                    <img class="edit-post-btn" src="{% static 'admin/img/icon-changelink.svg' %}" alt="edit">
+                                </a>
+                                <a href="{% url 'delete_post_page' slug=most_viewed_post.slug %}">
+                                    <img class="delete-post-btn" src="{% static 'admin/img/icon-deletelink.svg' %}" alt="delete">
+                                </a>
+                            </div>
+                            {% endif %}
                        </div>
                    </div>
                </div>
@@ -74,6 +92,16 @@
                             <p>2 Views • 2 days ago</p>
                         </div>
                     </div>
+                    {% if playlist.channel == request.user %}
+                            <div class="action-buttons">
+                                <a href="{% url 'playlist-edit-page' slug=playlist.slug %}">
+                                    <img class="edit-post-btn" src="{% static 'admin/img/icon-changelink.svg' %}" alt="edit">
+                                </a>
+                                <a href="{% url 'playlist-delete-page' slug=playlist.slug %}">
+                                    <img class="delete-post-btn" src="{% static 'admin/img/icon-deletelink.svg' %}" alt="delete">
+                                </a>
+                            </div>
+                    {% endif %}
                 </div>
             {% endif %} 
         {% endfor %}

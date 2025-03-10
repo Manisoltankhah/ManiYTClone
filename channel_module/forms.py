@@ -39,8 +39,12 @@ class PlaylistCreationForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
+        instance = kwargs.get('instance')
         super(PlaylistCreationForm, self).__init__(*args, **kwargs)
         if user:
             self.fields['video'].queryset = Post.objects.filter(channel=user, is_active=True)
+
+        if instance:
+            self.fields['video'].initial = instance.video.all()
 
 

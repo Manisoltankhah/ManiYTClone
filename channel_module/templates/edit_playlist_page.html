@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header_references %}
+	<link rel="stylesheet" href="{% static 'css/posting_page_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block title %}
+	Posting
+{% endblock %}
+{% block content %}
+    {% if request.user.is_authenticated %}
+    	<div class="post-creation-container">
+        <header class="post-creation-page-header">
+            <h1>Edit Video</h1>
+            <p>Edit your content with some simple steps.</p>
+        </header>
+
+        <main>
+            <form id="upload-form" action="#" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- Video File Upload -->
+                <div class="form-group">
+                    {{ form.title }}
+                </div>
+
+                <!-- Video Title -->
+                <div class="form-group">
+                    {{ form.video }}
+                </div>
+
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <button type="submit">Update</button>
+                </div>
+            </form>
+        </main>
+    </div>
+    {% else %}
+        <p class="login-link-in-post-creation">please <a href="{% url 'login-page' %}">login</a></p>
+    {% endif %}
+{% endblock %}

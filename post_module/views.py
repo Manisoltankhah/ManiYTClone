@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.urls import reverse
-from django.views.generic import DetailView, CreateView, View, TemplateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, CreateView, View, TemplateView, UpdateView
 
 from account_module.models import User
 from post_module.forms import PostCommentForm, PostCommentUpdateForm, PostCreatingForm
@@ -72,6 +72,24 @@ class CreatePostView(View):
 
         context = {'post_creating_form': post_creating_form}
         return render(request, 'post_creation_page.html', context)
+
+
+class EditPostView(UpdateView):
+    model = Post
+    form_class = PostCreatingForm
+    template_name = 'post_edit_page.html'
+    success_url = reverse_lazy('home_page')
+
+
+class DeletePostView(DetailView):
+    model = Post
+    template_name = 'delete_post_confirmation.html'
+    success_url = reverse_lazy('home_page')
+
+    def get_context_data(self, **kwargs):
+        context = super(DeletePostView, self).get_context_data(**kwargs)
+        context['slug'] = self.kwargs['slug']
+        return context
 
 
 class AddComment(CreateView):

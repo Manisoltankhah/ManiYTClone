@@ -1,24 +1,4 @@
-/* Modern Reset */
-/** {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    box-sizing: border-box;*/
-/*}*/
 
-/*!* Body Styling *!*/
-/*body {*/
-/*    font-family: 'Inter', sans-serif;*/
-/*    background-color: #f5f5f5;*/
-/*    color: #333;*/
-/*    line-height: 1.6;*/
-/*    display: flex;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    min-height: 100vh;*/
-/*    padding: 20px;*/
-/*}*/
-
-/* Container */
 .post-creation-page-container {
     margin-left: auto;
     margin-right: auto;
@@ -129,7 +109,7 @@
     color: #666;
 }
 
-/* Button Styling */
+ /*Button Styling*/
 button {
     background-color: #ff0000;
     color: white;
@@ -141,7 +121,31 @@ button {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+.button-container {
+    text-align: center; /* Center the container */
+}
 
+.button-container button,
+.button-container a {
+    margin: 0 5px; /* Add some space between the button and the link */
+}
+
+.button-container a {
+    float: left;
+    text-decoration: none;
+    color: blue;
+    font-size: 16px;
+}
+
+.delete-button {
+    float: left;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 button:hover {
     background-color: #cc0000;
 }
+

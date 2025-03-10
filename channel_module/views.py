@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.text import slugify
 from django.views import View
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, UpdateView, DetailView
 from account_module.models import User
 from channel_module.forms import EditProfileModelForm, PlaylistCreationForm
 from post_module.models import Post, Playlist
@@ -69,3 +69,31 @@ class CreatePlaylistView(CreateView):
         response = super(CreatePlaylistView, self).form_valid(form)
         self.object.video.set(form.cleaned_data['video'])
         return response
+
+
+class EditPlaylistView(UpdateView):
+    model = Playlist
+    form_class = PlaylistCreationForm
+    template_name = 'edit_playlist_page.html'
+    success_url = reverse_lazy('home_page')
+
+    def get_form_kwargs(self):
+        kwargs = super(EditPlaylistView, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        response = super(EditPlaylistView, self).form_valid(form)
+        self.object.video.set(form.cleaned_data['video'])
+        return response
+
+
+class DeletePlaylistView(DetailView):
+    model = Playlist
+    template_name = 'delete_playlist_confirmation.html'
+    success_url = reverse_lazy('home_page')
+
+    def get_context_data(self, **kwargs):
+        context = super(DeletePlaylistView, self).get_context_data(**kwargs)
+        context['slug'] = self.kwargs['slug']
+        return context

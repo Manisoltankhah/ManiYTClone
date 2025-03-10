@@ -10,6 +10,8 @@ urlpatterns = [
 
     # create post url
     path('create-post/', views.CreatePostView.as_view(), name='create_post_page'),
+    path('edit-post/<slug:slug>/', views.EditPostView.as_view(), name='edit_post_page'),
+    path('delete-post/<slug:slug>/', views.DeletePostView.as_view(), name='delete_post_page'),
 
     # Add Edit Delete comment
     path('watch/add-comment-on/<slug:slug>/<int:pk>/', views.AddComment.as_view(), name='add_post_comment'),

@@ -719,6 +719,31 @@ form { max-width:420px; margin:50px auto; }
     color: #333;
     font-size: 17px;
 }
+.post-container {
+    position: relative;
+}
+
+/* Style for the action buttons container */
+.action-buttons {
+    display: flex; /* Align items horizontally */
+    gap: 8px; /* Add spacing between the buttons */
+    align-items: center; /* Vertically align the buttons */
+}
+
+/* Reduce the size of the edit and delete icons */
+.edit-post-btn,
+.delete-post-btn {
+    width: 16px; /* Adjust the width of the icons */
+    height: 16px; /* Adjust the height of the icons */
+}
+
+/* Ensure the vid-info section has proper spacing */
+.vid-info {
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    gap: 4px; /* Add spacing between elements */
+}
+
 @media (max-width:991px){
     .container{
         grid-template-columns: 1.5fr 1fr;
